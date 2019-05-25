@@ -21,6 +21,12 @@ Meteor.methods({
       });
     },
     'tasks.remove'(taskId) {
+
+      // Make sure the user is logged in before deleting a task
+      if (! Meteor.userId()) {
+        throw new Meteor.Error('Please log in to delete');
+      }
+
       check(taskId, String);
    
       Tasks.remove(taskId);
